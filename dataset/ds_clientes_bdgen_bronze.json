@@ -1,0 +1,39 @@
+{
+	"name": "ds_clientes_bdgen_bronze",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ls_sa_raw_ventas",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "BRONCE"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "Clientes_BD-GEN.csv",
+				"container": "raw-dwventas"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "CID",
+				"type": "String"
+			},
+			{
+				"name": "BDATE",
+				"type": "String"
+			},
+			{
+				"name": "GEN",
+				"type": "String"
+			}
+		]
+	}
+}
