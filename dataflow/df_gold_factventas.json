@@ -36,7 +36,15 @@
 					"name": "dimTiempo"
 				}
 			],
-			"sinks": [],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "ds_hechos_dim_factventas",
+						"type": "DatasetReference"
+					},
+					"name": "sink1"
+				}
+			],
 			"transformations": [
 				{
 					"name": "lookup1"
@@ -116,7 +124,34 @@
 				"          id_tiempo",
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true) ~> select1"
+				"     skipDuplicateMapOutputs: true) ~> select1",
+				"select1 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          id_venta as integer,",
+				"          id_cliente as integer,",
+				"          id_producto as integer,",
+				"          id_tiempo as integer,",
+				"          MontoVenta as string,",
+				"          Cantidad as string,",
+				"          PrecioUnitario as string",
+				"     ),",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError',",
+				"     mapColumn(",
+				"          id_cliente,",
+				"          id_producto,",
+				"          id_tiempo,",
+				"          MontoVenta,",
+				"          Cantidad,",
+				"          PrecioUnitario",
+				"     )) ~> sink1"
 			]
 		}
 	}
