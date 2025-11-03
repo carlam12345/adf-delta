@@ -28,12 +28,15 @@
 			"scriptLines": [
 				"source(output(",
 				"          sls_order_dt as string,",
-				"          sls_ship_dt as string",
+				"          sls_ship_dt as string,",
+				"          anio as integer,",
+				"          mes as integer,",
+				"          dia as integer",
 				"     ),",
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     isolationLevel: 'READ_UNCOMMITTED',",
-				"     query: 'SELECT DISTINCT\\n    s.sls_order_dt,\\n    s.sls_ship_dt\\nFROM SILVER.Detalle_ventas s\\nWHERE s.sls_order_dt IS NOT NULL\\n  AND s.sls_ship_dt IS NOT NULL',",
+				"     query: 'SELECT DISTINCT\\n    v.sls_order_dt,\\n    v.sls_ship_dt,\\n    YEAR(CONVERT(DATE, v.sls_order_dt)) AS anio,\\n    MONTH(CONVERT(DATE, v.sls_order_dt)) AS mes,\\n    DAY(CONVERT(DATE, v.sls_order_dt)) AS dia\\nFROM SILVER.Detalle_ventas v\\nWHERE v.sls_order_dt IS NOT NULL\\n',",
 				"     format: 'query') ~> source1",
 				"source1 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
@@ -52,7 +55,8 @@
 				"     errorHandlingOption: 'stopOnFirstError',",
 				"     mapColumn(",
 				"          sls_order_dt,",
-				"          sls_ship_dt",
+				"          sls_ship_dt,",
+				"          id_tiempo",
 				"     )) ~> sink1"
 			]
 		}
