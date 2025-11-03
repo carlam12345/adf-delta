@@ -1,0 +1,88 @@
+{
+	"name": "df_silver_detalles_venta",
+	"properties": {
+		"folder": {
+			"name": "SILVER"
+		},
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "ds_sql_detalles_ventas",
+						"type": "DatasetReference"
+					},
+					"name": "source1"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "ds_sql_detalles_ventas",
+						"type": "DatasetReference"
+					},
+					"name": "sink1"
+				}
+			],
+			"transformations": [
+				{
+					"name": "derivedColumn1"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          sls_ord_num as string,",
+				"          sls_prd_key as string,",
+				"          sls_cust_id as string,",
+				"          sls_order_dt as string,",
+				"          sls_ship_dt as string,",
+				"          sls_sales as string,",
+				"          sls_quantity as string,",
+				"          sls_price as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     format: 'table') ~> source1",
+				"source1 derive(sls_ord_num = trim(sls_ord_num),",
+				"          sls_prd_key = trim(sls_prd_key),",
+				"          sls_cust_id = trim(sls_cust_id),",
+				"          sls_order_dt = trim(sls_order_dt),",
+				"          sls_ship_dt = trim(sls_ship_dt),",
+				"          sls_sales = trim(sls_sales),",
+				"          sls_quantity = trim(sls_quantity),",
+				"          sls_price = trim(sls_price)) ~> derivedColumn1",
+				"derivedColumn1 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          sls_ord_num as string,",
+				"          sls_prd_key as string,",
+				"          sls_cust_id as string,",
+				"          sls_order_dt as string,",
+				"          sls_ship_dt as string,",
+				"          sls_sales as string,",
+				"          sls_quantity as string,",
+				"          sls_price as string",
+				"     ),",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError',",
+				"     mapColumn(",
+				"          sls_ord_num,",
+				"          sls_prd_key,",
+				"          sls_cust_id,",
+				"          sls_order_dt,",
+				"          sls_ship_dt,",
+				"          sls_sales,",
+				"          sls_quantity,",
+				"          sls_price",
+				"     )) ~> sink1"
+			]
+		}
+	}
+}

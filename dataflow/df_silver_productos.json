@@ -1,0 +1,76 @@
+{
+	"name": "df_silver_productos",
+	"properties": {
+		"folder": {
+			"name": "SILVER"
+		},
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "ds_sql_productos",
+						"type": "DatasetReference"
+					},
+					"name": "source1"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "ds_sql_silver_productos",
+						"type": "DatasetReference"
+					},
+					"name": "sink1"
+				}
+			],
+			"transformations": [
+				{
+					"name": "derivedColumn1"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          prd_id as string,",
+				"          prd_key as string,",
+				"          prd_nm as string,",
+				"          prd_cost as string,",
+				"          prd_line as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     format: 'table') ~> source1",
+				"source1 derive(prd_id = trim(prd_id),",
+				"          prd_key = trim(prd_key),",
+				"          prd_nm = trim(prd_nm),",
+				"          prd_cost = trim(prd_cost),",
+				"          prd_line = trim(prd_line)) ~> derivedColumn1",
+				"derivedColumn1 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          prd_id as string,",
+				"          prd_key as string,",
+				"          prd_nm as string,",
+				"          prd_cost as string,",
+				"          prd_line as string",
+				"     ),",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError',",
+				"     mapColumn(",
+				"          prd_id,",
+				"          prd_key,",
+				"          prd_nm,",
+				"          prd_cost,",
+				"          prd_line",
+				"     )) ~> sink1"
+			]
+		}
+	}
+}

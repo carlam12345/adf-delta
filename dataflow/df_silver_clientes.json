@@ -1,0 +1,80 @@
+{
+	"name": "df_silver_clientes",
+	"properties": {
+		"folder": {
+			"name": "SILVER"
+		},
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "ds_sql_clientes",
+						"type": "DatasetReference"
+					},
+					"name": "source1"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "ds_sql_silver_cliente",
+						"type": "DatasetReference"
+					},
+					"name": "sink1"
+				}
+			],
+			"transformations": [
+				{
+					"name": "derivedColumn1"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          cst_id as string,",
+				"          cst_key as string,",
+				"          cst_firstname as string,",
+				"          cst_lastname as string,",
+				"          cst_marital_status as string,",
+				"          cst_gndr as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     format: 'table') ~> source1",
+				"source1 derive(cst_id = trim(cst_id),",
+				"          cst_key = trim(cst_key),",
+				"          cst_firstname = trim(cst_firstname),",
+				"          cst_lastname = trim(cst_lastname),",
+				"          cst_marital_status = trim(cst_marital_status),",
+				"          cst_gndr = trim(cst_gndr)) ~> derivedColumn1",
+				"derivedColumn1 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          cst_id as string,",
+				"          cst_key as string,",
+				"          cst_firstname as string,",
+				"          cst_lastname as string,",
+				"          cst_marital_status as string,",
+				"          cst_gndr as string",
+				"     ),",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError',",
+				"     mapColumn(",
+				"          cst_id,",
+				"          cst_key,",
+				"          cst_firstname,",
+				"          cst_lastname,",
+				"          cst_marital_status,",
+				"          cst_gndr",
+				"     )) ~> sink1"
+			]
+		}
+	}
+}
