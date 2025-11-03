@@ -55,8 +55,7 @@
 				"     errorHandlingOption: 'stopOnFirstError',",
 				"     mapColumn(",
 				"          sls_order_dt,",
-				"          sls_ship_dt,",
-				"          id_tiempo",
+				"          sls_ship_dt",
 				"     )) ~> sink1"
 			]
 		}
