@@ -18,7 +18,7 @@
 			"sinks": [
 				{
 					"dataset": {
-						"referenceName": "ds_sql_detalles_ventas",
+						"referenceName": "ds_sql_silver_detalles_venta",
 						"type": "DatasetReference"
 					},
 					"name": "sink1"

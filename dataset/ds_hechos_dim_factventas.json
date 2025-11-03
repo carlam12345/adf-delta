@@ -1,0 +1,52 @@
+{
+	"name": "ds_hechos_dim_factventas",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ls_sql_dw_ventas",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "GOLD"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "id_venta",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "id_cliente",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "id_producto",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "id_tiempo",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "MontoVenta",
+				"type": "varchar"
+			},
+			{
+				"name": "Cantidad",
+				"type": "varchar"
+			},
+			{
+				"name": "PrecioUnitario",
+				"type": "varchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "GOLD",
+			"table": "FactVentas"
+		}
+	}
+}
