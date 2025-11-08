@@ -14,6 +14,10 @@
 					"secureInput": false
 				},
 				"userProperties": [],
+				"linkedServiceName": {
+					"referenceName": "ls_sql_dw_ventas",
+					"type": "LinkedServiceReference"
+				},
 				"typeProperties": {
 					"scripts": [
 						{
