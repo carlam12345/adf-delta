@@ -27,8 +27,7 @@
 			"transformations": [],
 			"scriptLines": [
 				"source(output(",
-				"          sls_order_dt as date,",
-				"          sls_ship_dt as date,",
+				"          fecha as date,",
 				"          anio as integer,",
 				"          mes as integer,",
 				"          dia as integer",
@@ -36,7 +35,7 @@
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     isolationLevel: 'READ_UNCOMMITTED',",
-				"     query: 'SELECT DISTINCT \\n    CAST(LEFT(CONVERT(VARCHAR(10), d.sls_order_dt), 8) AS DATE) AS fecha,\\n    YEAR(CAST(LEFT(CONVERT(VARCHAR(10), d.sls_order_dt), 8) AS DATE)) AS anio,\\n    MONTH(CAST(LEFT(CONVERT(VARCHAR(10), d.sls_order_dt), 8) AS DATE)) AS mes,\\n    DAY(CAST(LEFT(CONVERT(VARCHAR(10), d.sls_order_dt), 8) AS DATE)) AS dia\\nFROM SILVER.Detalle_ventas AS d\\nWHERE d.sls_order_dt IS NOT NULL;\\n',",
+				"     query: 'SELECT DISTINCT \\n    CAST(TRY_CONVERT(DATE, d.sls_order_dt, 112) AS DATE) AS fecha,\\n    YEAR(TRY_CONVERT(DATE, d.sls_order_dt, 112)) AS anio,\\n    MONTH(TRY_CONVERT(DATE, d.sls_order_dt, 112)) AS mes,\\n    DAY(TRY_CONVERT(DATE, d.sls_order_dt, 112)) AS dia\\nFROM SILVER.Detalle_ventas AS d\\nWHERE TRY_CONVERT(DATE, d.sls_order_dt, 112) IS NOT NULL\\n',",
 				"     format: 'query') ~> source1",
 				"source1 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
@@ -54,8 +53,8 @@
 				"     skipDuplicateMapOutputs: true,",
 				"     errorHandlingOption: 'stopOnFirstError',",
 				"     mapColumn(",
-				"          sls_order_dt,",
-				"          sls_ship_dt",
+				"          sls_order_dt = fecha,",
+				"          sls_ship_dt = fecha",
 				"     )) ~> sink1"
 			]
 		}
