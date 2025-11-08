@@ -59,6 +59,7 @@
 				"          sls_quantity = upper(trim(sls_quantity)),",
 				"          sls_price = upper(trim(sls_price))) ~> derivedColumn1",
 				"derivedColumn2 cast(output(",
+				"          sls_cust_id as integer '000',",
 				"          sls_order_dt as date 'yyyy-MM-dd',",
 				"          sls_ship_dt as date 'yyyy-MM-dd'",
 				"     ),",

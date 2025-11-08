@@ -30,6 +30,9 @@
 				},
 				{
 					"name": "derivedColumn2"
+				},
+				{
+					"name": "cast1"
 				}
 			],
 			"scriptLines": [
@@ -52,7 +55,11 @@
 				"          cst_marital_status = upper(trim(cst_marital_status)),",
 				"          cst_gndr = upper(trim(cst_gndr))) ~> derivedColumn1",
 				"derivedColumn1 derive(cst_gndr = iif(   isNull(cst_gndr) || trim(toString(cst_gndr)) == '',   iif( mod( crc32( toString(cst_id) ), 2 ) == 0, 'M', 'F'),   toString(cst_gndr) )) ~> derivedColumn2",
-				"derivedColumn2 sink(allowSchemaDrift: false,",
+				"derivedColumn2 cast(output(",
+				"          cst_id as integer '000'",
+				"     ),",
+				"     errors: true) ~> cast1",
+				"cast1 sink(allowSchemaDrift: false,",
 				"     validateSchema: false,",
 				"     input(",
 				"          cst_id as string,",
