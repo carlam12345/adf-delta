@@ -9,7 +9,7 @@
 			"sources": [
 				{
 					"dataset": {
-						"referenceName": "ds_sql_detalles_ventas",
+						"referenceName": "ds_sql_silver_detalles_venta",
 						"type": "DatasetReference"
 					},
 					"name": "source1"
@@ -76,22 +76,20 @@
 				"     query: 'SELECT\\n    sls_ord_num,\\n    sls_prd_key,\\n    sls_cust_id,\\n    sls_order_dt,\\n    sls_ship_dt,\\n    sls_sales,\\n    sls_quantity,\\n    sls_price\\nFROM SILVER.Detalle_ventas\\n',",
 				"     format: 'query') ~> source1",
 				"source(output(",
-				"          cst_id as string,",
-				"          id_cliente as integer",
+				"          cst_id as string",
 				"     ),",
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     isolationLevel: 'READ_UNCOMMITTED',",
-				"     query: 'SELECT\\n  cst_id,      -- clave de negocio (texto)\\n  id_cliente   -- surrogate key (int)\\nFROM GOLD.DimCliente\\n',",
+				"     query: 'SELECT\\n  cst_id   \\nFROM GOLD.DimCliente\\n',",
 				"     format: 'query') ~> dimCliente",
 				"source(output(",
-				"          prd_key as string,",
-				"          id_producto as integer",
+				"          prd_key as string",
 				"     ),",
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     isolationLevel: 'READ_UNCOMMITTED',",
-				"     query: 'SELECT\\n  prd_key,       -- clave de negocio (texto)\\n  id_producto    -- surrogate key (int)\\nFROM GOLD.DimProducto',",
+				"     query: 'SELECT\\n  prd_key\\nFROM GOLD.DimProducto',",
 				"     format: 'query') ~> dimProducto",
 				"source(output(",
 				"          sls_order_dt as string,",
