@@ -100,7 +100,7 @@
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     isolationLevel: 'READ_UNCOMMITTED',",
-				"     query: 'SELECT\\n  sls_order_dt,\\n  sls_ship_dt,\\n  id_tiempo\\nFROM GOLD.DimTiempo;',",
+				"     query: 'SELECT\\n  sls_order_dt,\\n  sls_ship_dt,\\n  id_tiempo\\nFROM GOLD.DimTiempo',",
 				"     format: 'query') ~> dimTiempo",
 				"source1, dimCliente lookup(sls_cust_id == cst_id,",
 				"     multiple: false,",
