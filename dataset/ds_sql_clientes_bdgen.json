@@ -28,5 +28,6 @@
 			"schema": "BRONZE",
 			"table": "Clientes_BD_GEN"
 		}
-	}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
 }

@@ -24,5 +24,6 @@
 			"schema": "BRONZE",
 			"table": "Clientes_location"
 		}
-	}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
 }

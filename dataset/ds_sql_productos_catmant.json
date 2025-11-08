@@ -32,5 +32,6 @@
 			"schema": "BRONZE",
 			"table": "Productos_CAT_MANT"
 		}
-	}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
 }

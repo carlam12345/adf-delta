@@ -48,5 +48,6 @@
 			"schema": "BRONZE",
 			"table": "Detalle_ventas"
 		}
-	}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
 }
