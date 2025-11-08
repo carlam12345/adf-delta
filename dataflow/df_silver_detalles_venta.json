@@ -30,6 +30,9 @@
 				},
 				{
 					"name": "cast1"
+				},
+				{
+					"name": "derivedColumn2"
 				}
 			],
 			"scriptLines": [
@@ -55,10 +58,12 @@
 				"          sls_sales = upper(trim(sls_sales)),",
 				"          sls_quantity = upper(trim(sls_quantity)),",
 				"          sls_price = upper(trim(sls_price))) ~> derivedColumn1",
-				"derivedColumn1 cast(output(",
-				"          sls_order_dt as date 'yyyy.MM.dd'",
+				"derivedColumn2 cast(output(",
+				"          sls_order_dt as date 'yyyy-MM-dd'",
 				"     ),",
 				"     errors: true) ~> cast1",
+				"derivedColumn1 derive(sls_order_dt = substring(sls_order_dt,1,4) + '-' + substring(sls_order_dt,5,2) + '-' + substring(sls_order_dt,7,2),",
+				"          sls_ship_dt = substring(sls_ship_dt,1,4) + '-' + substring(sls_ship_dt,5,2) + '-' + substring(sls_ship_dt,7,2)) ~> derivedColumn2",
 				"cast1 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
