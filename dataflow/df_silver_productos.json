@@ -27,6 +27,9 @@
 			"transformations": [
 				{
 					"name": "derivedColumn1"
+				},
+				{
+					"name": "derivedColumn2"
 				}
 			],
 			"scriptLines": [
@@ -46,7 +49,8 @@
 				"          prd_nm = upper(trim(prd_nm)),",
 				"          prd_cost = upper(trim(prd_cost)),",
 				"          prd_line = upper(trim(prd_line))) ~> derivedColumn1",
-				"derivedColumn1 sink(allowSchemaDrift: true,",
+				"derivedColumn1 derive(prd_key = substring(toString(prd_key), 7)) ~> derivedColumn2",
+				"derivedColumn2 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
 				"          prd_id as string,",
