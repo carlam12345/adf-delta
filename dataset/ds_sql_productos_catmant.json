@@ -29,7 +29,7 @@
 			}
 		],
 		"typeProperties": {
-			"schema": "bronze",
+			"schema": "BRONZE",
 			"table": "Productos_CAT_MANT"
 		}
 	}

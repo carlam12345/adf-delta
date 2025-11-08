@@ -1,10 +1,6 @@
 {
 	"name": "ds_hechos_dim_factventas",
 	"properties": {
-		"linkedServiceName": {
-			"referenceName": "ls_sql_dw_ventas",
-			"type": "LinkedServiceReference"
-		},
 		"folder": {
 			"name": "GOLD"
 		},

@@ -25,7 +25,7 @@
 			}
 		],
 		"typeProperties": {
-			"schema": "bronze",
+			"schema": "BRONZE",
 			"table": "Clientes_BD_GEN"
 		}
 	}

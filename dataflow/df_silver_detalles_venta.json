@@ -27,6 +27,9 @@
 			"transformations": [
 				{
 					"name": "derivedColumn1"
+				},
+				{
+					"name": "cast1"
 				}
 			],
 			"scriptLines": [
@@ -52,7 +55,11 @@
 				"          sls_sales = upper(trim(sls_sales)),",
 				"          sls_quantity = upper(trim(sls_quantity)),",
 				"          sls_price = upper(trim(sls_price))) ~> derivedColumn1",
-				"derivedColumn1 sink(allowSchemaDrift: true,",
+				"derivedColumn1 cast(output(",
+				"          sls_order_dt as date 'yyyy.MM.dd'",
+				"     ),",
+				"     errors: true) ~> cast1",
+				"cast1 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
 				"          sls_ord_num as string,",
@@ -76,7 +83,7 @@
 				"          sls_ord_num,",
 				"          sls_prd_key,",
 				"          sls_cust_id,",
-				"          sls_order_dt,",
+				"          sls_order_dt = sls_ship_dt,",
 				"          sls_ship_dt,",
 				"          sls_sales,",
 				"          sls_quantity,",

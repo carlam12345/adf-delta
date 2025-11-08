@@ -45,7 +45,7 @@
 			}
 		],
 		"typeProperties": {
-			"schema": "bronze",
+			"schema": "BRONZE",
 			"table": "Detalle_ventas"
 		}
 	}

@@ -37,7 +37,7 @@
 			}
 		],
 		"typeProperties": {
-			"schema": "bronze",
+			"schema": "BRONZE",
 			"table": "Clientes"
 		}
 	}
