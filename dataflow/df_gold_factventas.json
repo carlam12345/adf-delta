@@ -8,6 +8,10 @@
 		"typeProperties": {
 			"sources": [
 				{
+					"dataset": {
+						"referenceName": "ds_sql_detalles_ventas",
+						"type": "DatasetReference"
+					},
 					"name": "source1"
 				},
 				{
@@ -67,7 +71,10 @@
 				"          sls_price as string",
 				"     ),",
 				"     allowSchemaDrift: true,",
-				"     validateSchema: false) ~> source1",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     query: 'SELECT\\n    sls_ord_num,\\n    sls_prd_key,\\n    sls_cust_id,\\n    sls_order_dt,\\n    sls_ship_dt,\\n    sls_sales,\\n    sls_quantity,\\n    sls_price\\nFROM SILVER.Detalle_ventas\\n',",
+				"     format: 'query') ~> source1",
 				"source(output(",
 				"          cst_id as string,",
 				"          id_cliente as integer",
